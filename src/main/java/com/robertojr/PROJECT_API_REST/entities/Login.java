@@ -2,6 +2,8 @@ package com.robertojr.PROJECT_API_REST.entities;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,20 +24,21 @@ public class Login implements Serializable {
 	private String password;
 	private String email;
 	
-	@OneToOne
+	@OneToOne(mappedBy = "credential")
+	@JsonIgnore
 	private User userObj;
 	
 	public Login() {
 
 	}
 
-	public Login(Long id, String username, String password, String email, User userObj) {
+	public Login(Long id, String username, String password, String email) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.userObj = userObj;
+		
 	}
 
 	public Long getId() {
@@ -46,11 +49,11 @@ public class Login implements Serializable {
 		this.id = id;
 	}
 
-	public String getUser() {
+	public String getUserName() {
 		return username;
 	}
 
-	public void setUser(String user) {
+	public void setUserName(String user) {
 		this.username = user;
 	}
 

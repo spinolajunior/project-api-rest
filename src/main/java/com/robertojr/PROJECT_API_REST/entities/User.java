@@ -2,12 +2,16 @@ package com.robertojr.PROJECT_API_REST.entities;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -27,15 +31,17 @@ public class User implements Serializable {
 	private String description;
 	private String photoProfile;
 	
-	@OneToOne
-	private Login credentials;
+	@OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+	@JoinColumn(name = "credential_id")
+	@JsonIgnore
+	private Login credential;
 
 	public User() {
 		
 	}
 
 	public User(Long id, String name, String lastName, String phone, Integer ager, String description,
-			String photoProfile, Login credentials) {
+			String photoProfile, Login credential) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -44,7 +50,7 @@ public class User implements Serializable {
 		this.ager = ager;
 		this.description = description;
 		this.photoProfile = photoProfile;
-		this.credentials = credentials;
+		this.credential = credential;
 	}
 
 	public Long getId() {
@@ -103,12 +109,12 @@ public class User implements Serializable {
 		this.photoProfile = photoProfile;
 	}
 
-	public Login getCredentials() {
-		return credentials;
+	public Login getCredential() {
+		return credential;
 	}
 
-	public void setCredentials(Login credentials) {
-		this.credentials = credentials;
+	public void setCredential(Login credential) {
+		this.credential = credential;
 	}
 
 	@Override

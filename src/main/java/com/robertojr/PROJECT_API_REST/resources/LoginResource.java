@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.robertojr.PROJECT_API_REST.entities.Driver;
-import com.robertojr.PROJECT_API_REST.services.DriverService;
+import com.robertojr.PROJECT_API_REST.entities.Login;
+import com.robertojr.PROJECT_API_REST.services.LoginService;
 
 @RestController
-@RequestMapping(value = "/drivers")
-public class DriverResource {
+@RequestMapping(value = "/logins")
+public class LoginResource {
 
 	@Autowired
-	DriverService service;
+	LoginService service;
 
 	@GetMapping
-	public ResponseEntity<List<Driver>> findAll() {
-		List<Driver> Drivers = service.findAll();
-		return ResponseEntity.ok().body(Drivers);
+	public ResponseEntity<List<Login>> findAll() {
+		List<Login> Logins = service.findAll();
+		return ResponseEntity.ok().body(Logins);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Driver> findById(@PathVariable Long id) {
+	public ResponseEntity<Login> findById(@PathVariable Long id) {
 		return null;
 	}
 
 	@PostMapping
-	public ResponseEntity<Driver> insert(@RequestBody Driver Driver) {
+	public ResponseEntity<Login> insert(@RequestBody Login Login) {
 		return null;
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Driver> update(@RequestBody Driver Driver) {
+	public ResponseEntity<Login> update(@RequestBody Login Login) {
 		return null;
 	}
 
