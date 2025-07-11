@@ -1,10 +1,14 @@
 package com.robertojr.PROJECT_API_REST.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-import com.robertojr.PROJECT_API_REST.entities.enums.Available;
+import com.robertojr.PROJECT_API_REST.entities.enums.AvailableDriver;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,8 +20,12 @@ public class Driver extends User implements Serializable {
 	private String carModel;
 	private String plateNumber;
 	private Double ratingNumber;
-	private Available available;
+	private AvailableDriver available;
+	
+	@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL , orphanRemoval = true)
+	private Set<Racer> racers = new HashSet<>();
 
+	
 	public Driver() {
 
 	}
@@ -28,7 +36,7 @@ public class Driver extends User implements Serializable {
 		this.carModel = carModel;
 		this.plateNumber = plateNumber;
 		this.ratingNumber = 0.0;
-		this.available = Available.valueOfCode(available);
+		this.available = AvailableDriver.valueOfCode(available);
 	}
 
 	public String getCarModel() {
@@ -55,12 +63,20 @@ public class Driver extends User implements Serializable {
 		this.ratingNumber = ratingNumber;
 	}
 
-	public Available getAvailable() {
+	public AvailableDriver getAvailable() {
 		return available;
 	}
 
 	public void setAvailable( int code) {
-		this.available = Available.valueOfCode(code);
+		this.available = AvailableDriver.valueOfCode(code);
 	}
+
+	public Set<Racer> getRacers() {
+		return racers;
+	}
+
+	
+	
+	
 
 }

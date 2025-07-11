@@ -1,12 +1,12 @@
 package com.robertojr.PROJECT_API_REST.entities.enums;
 
-public enum Available {
+public enum AvailableDriver {
 
 	ONLINE(1), OFFLINE(2), UNDEFINED(0);
 
 	private int code;
 
-	private Available(int code) {
+	private AvailableDriver(int code) {
 		this.code = code;
 	}
 
@@ -14,13 +14,13 @@ public enum Available {
 		return code;
 	}
 
-	public static Available valueOfCode(int code) {
-		for (Available item : Available.values()) {
+	public static AvailableDriver valueOfCode(int code) {
+		for (AvailableDriver item : AvailableDriver.values()) {
 			if (code == item.getCode()) {
 				return item;
 			}
 		}
-		throw new IllegalArgumentException("Invalid Available code: "+code);
+		throw new IllegalArgumentException("Invalid AvailableDriver code: "+code);
 	}
 	
 	
