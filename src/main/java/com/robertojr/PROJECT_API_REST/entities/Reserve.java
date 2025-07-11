@@ -3,6 +3,8 @@ package com.robertojr.PROJECT_API_REST.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class Reserve implements Serializable {
 	
 	
 	@ManyToOne
+	@JsonIgnore
 	private Customer customer;
 	
 	@ManyToOne

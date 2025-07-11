@@ -25,7 +25,7 @@ public class Login implements Serializable {
 	private String email;
 	
 	@OneToOne(mappedBy = "credential")
-	@JsonIgnore
+	
 	private User userObj;
 	
 	public Login() {

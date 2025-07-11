@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.robertojr.PROJECT_API_REST.entities.enums.RacerStatus;
 
 import jakarta.persistence.CascadeType;
@@ -36,8 +37,10 @@ public class Racer implements Serializable{
 	private RacerStatus racerStatus;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Driver driver ;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "racer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private Set<Reserve> reserves = new HashSet<>();
 	
