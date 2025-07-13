@@ -83,14 +83,15 @@ public class TestConfig implements CommandLineRunner {
 				"São Bernardo",
 				"Nazare",
 				4,
-				4,
 				Instant.now(),
 				10.0,
-				"13° 06' 27.60\" S",
-				"-38° 53' 26.99\" W",
-				"São Bernardo a naZare as 7Hrs",1,driver);
+				"-12.7100",
+				"-38.9650",
+				"-12.7390",
+				"-38.9640",
+				"São Bernardo a Nazare as 7Hrs",1,driver);
 		
-		Reserve reserve = new Reserve(null,1,Instant.now(),customer,racer1);
+		Reserve reserve = new Reserve(null,5,Instant.now(),customer,racer1);
 		
 		driverRepository.save(driver);
 		customerRepository.save(customer);

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.robertojr.PROJECT_API_REST.entities.enums.RacerStatus;
 
 import jakarta.persistence.CascadeType;
@@ -25,22 +26,32 @@ public class Racer implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Integer vacancies;
+	private Instant time;
+	private Double pricePerVacancy;
+	private String description;
 	private String origin;
 	private String destiny;
-	private Integer vacancyFull;
-	private Integer vacancyAvailable;
-	private Instant Time;
-	private Double pricePerVacancy;
-	private String latitude;
-	private String longitude;
-	private String description;
+	
+	//origin
+	private String latitudeO;
+	private String longitudeO;
+	
+	//destiny
+	private String latitudeD;
+	private String longitudeD;
+	
+	
+	
+
+	
 	private RacerStatus racerStatus;
 	
 	@ManyToOne
 	@JsonIgnore
 	private Driver driver ;
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "racer",cascade = CascadeType.ALL,orphanRemoval = true)
 	private Set<Reserve> reserves = new HashSet<>();
 	
@@ -48,18 +59,19 @@ public class Racer implements Serializable{
 		
 	}
 
-	public Racer(Long id, String origin, String destiny, Integer vacancyFull, Integer vacancyAvailable, Instant time,
-			Double pricePerVacancy, String latitude, String longitude, String description, int racerStatus,Driver driver) {
+	public Racer(Long id, String origin, String destiny, Integer vacancies, Instant time,
+			Double pricePerVacancy, String latitudeO, String longitudeO, String latitudeD,String longitudeD, String description, int racerStatus,Driver driver) {
 		
 		this.id = id;
 		this.origin = origin;
 		this.destiny = destiny;
-		this.vacancyFull = vacancyFull;
-		this.vacancyAvailable = vacancyAvailable;
-		Time = time;
+		this.vacancies = vacancies;
+		this.time = time;
 		this.pricePerVacancy = pricePerVacancy;
-		this.latitude = latitude;
-		this.longitude = longitude;
+		this.latitudeO = latitudeO;
+		this.longitudeO = longitudeO;
+		this.latitudeD = latitudeD;
+		this.longitudeD = longitudeD;
 		this.description = description;
 		this.racerStatus = RacerStatus.valueOfCode(racerStatus);
 		this.driver = driver;
@@ -89,28 +101,20 @@ public class Racer implements Serializable{
 		this.destiny = destiny;
 	}
 
-	public Integer getVacancyFull() {
-		return vacancyFull;
+	public Integer getVacancies() {
+		return vacancies;
 	}
 
-	public void setVacancyFull(Integer vacancyFull) {
-		this.vacancyFull = vacancyFull;
-	}
-
-	public Integer getVacancyAvailable() {
-		return vacancyAvailable;
-	}
-
-	public void setVacancyAvailable(Integer vacancyAvailable) {
-		this.vacancyAvailable = vacancyAvailable;
+	public void setVacancies(Integer vacancies) {
+		this.vacancies = vacancies;
 	}
 
 	public Instant getTime() {
-		return Time;
+		return time;
 	}
 
 	public void setTime(Instant time) {
-		Time = time;
+		this.time = time;
 	}
 
 	public Double getPricePerVacancy() {
@@ -121,20 +125,36 @@ public class Racer implements Serializable{
 		this.pricePerVacancy = pricePerVacancy;
 	}
 
-	public String getLatitude() {
-		return latitude;
+	public String getLatitudeO() {
+		return latitudeO;
 	}
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
+	public void setLatitudeO(String latitudeO) {
+		this.latitudeO = latitudeO;
 	}
 
-	public String getLongitude() {
-		return longitude;
+	public String getLongitudeO() {
+		return longitudeO;
 	}
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
+	public void setLongitudeO(String longitudeO) {
+		this.longitudeO = longitudeO;
+	}
+
+	public String getLatitudeD() {
+		return latitudeD;
+	}
+
+	public void setLatitudeD(String latitudeD) {
+		this.latitudeD = latitudeD;
+	}
+
+	public String getLongitudeD() {
+		return longitudeD;
+	}
+
+	public void setLongitudeD(String longitudeD) {
+		this.longitudeD = longitudeD;
 	}
 
 	public String getDescription() {
@@ -160,7 +180,26 @@ public class Racer implements Serializable{
 	public void setDriver(Driver driver) {
 		this.driver = driver;
 	}
+	
+	
+	public Set<Reserve> getReserves() {
+		return reserves;
+	}
 
+	@JsonProperty("availableVacancies")
+	public int getAvailableVacancies() {
+		int availableVacancies = vacancies;
+		if(vacancies > 0) {
+			for(Reserve item : reserves) {
+				if(availableVacancies >= item.getVacancy()) {
+					availableVacancies -= item.getVacancy();
+				}
+				
+			}
+		}
+		return availableVacancies;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

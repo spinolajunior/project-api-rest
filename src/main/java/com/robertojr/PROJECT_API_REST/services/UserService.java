@@ -1,6 +1,7 @@
 package com.robertojr.PROJECT_API_REST.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,14 @@ public class UserService {
 
 	public List<User> findAll() {
 		return repository.findAll();
+	}
+	
+	public User findById(Long id) {
+		Optional<User> opt = repository.findById(id);
+		return opt.get();
+	}
+	
+	public User insert(User user) {
+		return repository.save(user);
 	}
 }

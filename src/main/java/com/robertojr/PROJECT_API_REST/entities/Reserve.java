@@ -29,6 +29,7 @@ public class Reserve implements Serializable {
 	private Customer customer;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Racer racer;
 
 	public Reserve() {
