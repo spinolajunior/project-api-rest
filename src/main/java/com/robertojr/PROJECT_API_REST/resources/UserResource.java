@@ -2,7 +2,6 @@ package com.robertojr.PROJECT_API_REST.resources;
 
 import java.net.URI;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,13 +47,15 @@ public class UserResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@RequestBody User user) {
-		return null;
+	public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User user) {
+		User obj = service.update(id, user);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-		return null;
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }
