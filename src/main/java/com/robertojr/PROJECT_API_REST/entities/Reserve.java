@@ -3,8 +3,6 @@ package com.robertojr.PROJECT_API_REST.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +26,6 @@ public class Reserve implements Serializable {
 	private Customer customer;
 	
 	@ManyToOne
-	@JsonIgnore
 	private Racer racer;
 
 	public Reserve() {
@@ -109,12 +106,5 @@ public class Reserve implements Serializable {
 			return false;
 		return true;
 	}
-
-	
-	
-	
-	
-	
-	
 
 }

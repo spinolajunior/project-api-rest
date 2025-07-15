@@ -48,11 +48,11 @@ public class Racer implements Serializable{
 	private RacerStatus racerStatus;
 	
 	@ManyToOne
-	@JsonIgnore
 	private Driver driver ;
 	
 	
 	@OneToMany(mappedBy = "racer",cascade = CascadeType.ALL,orphanRemoval = true)
+	@JsonIgnore
 	private Set<Reserve> reserves = new HashSet<>();
 	
 	public Racer() {

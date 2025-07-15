@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.robertojr.PROJECT_API_REST.entities.Customer;
+import com.robertojr.PROJECT_API_REST.entities.Racer;
 import com.robertojr.PROJECT_API_REST.entities.Reserve;
+import com.robertojr.PROJECT_API_REST.repositories.CustomerRepository;
+import com.robertojr.PROJECT_API_REST.repositories.RacerRepository;
 import com.robertojr.PROJECT_API_REST.repositories.ReserveRepository;
 import com.robertojr.PROJECT_API_REST.services.exceptions.DataBaseException;
 import com.robertojr.PROJECT_API_REST.services.exceptions.ResourceNotFoundException;
@@ -19,6 +23,12 @@ import jakarta.persistence.EntityNotFoundException;
 public class ReserveService {
 	@Autowired
 	private ReserveRepository repository;
+
+	@Autowired
+	private RacerRepository racerRepository;
+
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	public List<Reserve> findAll() {
 		return repository.findAll();
@@ -35,6 +45,17 @@ public class ReserveService {
 	}
 
 	public Reserve insert(Reserve Reserve) {
+		if (Reserve.getRacer() != null && Reserve.getRacer().getId() != null) {
+			Racer racer = racerRepository.findById(Reserve.getRacer().getId())
+					.orElseThrow(() -> new ResourceNotFoundException(Reserve.getRacer().getId(), "Racer Not found!"));
+			Reserve.setRacer(racer);
+			if (Reserve.getCustomer() != null && Reserve.getCustomer().getId() != null) {
+				Customer customer = customerRepository.findById(Reserve.getCustomer().getId()).orElseThrow(
+						() -> new ResourceNotFoundException(Reserve.getCustomer().getId(), "Customer Not found!"));
+				Reserve.setCustomer(customer);
+			}
+
+		}
 		return repository.save(Reserve);
 	}
 

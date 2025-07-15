@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.robertojr.PROJECT_API_REST.entities.Driver;
 import com.robertojr.PROJECT_API_REST.entities.Racer;
+import com.robertojr.PROJECT_API_REST.repositories.DriverRepository;
 import com.robertojr.PROJECT_API_REST.repositories.RacerRepository;
 import com.robertojr.PROJECT_API_REST.services.exceptions.DataBaseException;
 import com.robertojr.PROJECT_API_REST.services.exceptions.ResourceNotFoundException;
@@ -19,6 +21,9 @@ import jakarta.persistence.EntityNotFoundException;
 public class RacerService {
 	@Autowired
 	private RacerRepository repository;
+
+	@Autowired
+	private DriverRepository driverRepository;
 
 	public List<Racer> findAll() {
 		return repository.findAll();
@@ -35,6 +40,12 @@ public class RacerService {
 	}
 
 	public Racer insert(Racer Racer) {
+		if (Racer.getDriver() != null && Racer.getDriver().getId() != null) {
+			Driver driver = driverRepository.findById(Racer.getDriver().getId())
+					.orElseThrow(() -> new ResourceNotFoundException(Racer.getDriver().getId()));
+			Racer.setDriver(driver);
+		}
+
 		return repository.save(Racer);
 	}
 

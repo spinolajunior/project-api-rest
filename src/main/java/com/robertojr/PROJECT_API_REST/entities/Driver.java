@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.robertojr.PROJECT_API_REST.entities.enums.AvailableDriver;
 
 import jakarta.persistence.CascadeType;
@@ -23,6 +24,7 @@ public class Driver extends User implements Serializable {
 	private AvailableDriver available;
 	
 	@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL , orphanRemoval = true)
+	@JsonIgnore
 	private Set<Racer> racers = new HashSet<>();
 
 	
