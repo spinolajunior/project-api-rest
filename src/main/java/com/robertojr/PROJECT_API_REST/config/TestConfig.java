@@ -53,9 +53,9 @@ public class TestConfig implements CommandLineRunner {
 		
 		Login login2 = new Login(
 			    null,
-			    "vitoriaCosta",
+			    "Vanessablue",
 			    "12345678",
-			    "vitoria@gmail.com");
+			    "vanessablue@gmail.com");
 		
 		
 		Driver driver = new Driver(null,
@@ -68,11 +68,11 @@ public class TestConfig implements CommandLineRunner {
 		
 		
 		Customer customer = new Customer(null,
-				"Vitoria",
-				"Costa",
+				"vanessa",
+				"blue",
 				"7598371745",
 				22,
-				"Cliente linda",
+				"novo usuario",
 				"URL photo",login2);
 		
 		
