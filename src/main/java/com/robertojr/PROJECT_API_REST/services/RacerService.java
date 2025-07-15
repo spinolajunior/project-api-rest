@@ -89,25 +89,28 @@ public class RacerService {
 
 	public Racer updateData(Racer entity, Racer obj) {
 
-//		if( obj.getAger() != null) {
-//			entity.setAger(obj.getAger());
-//		}
-//		if (obj.getDescription() != null) {
-//			entity.setDescription(obj.getDescription());
-//		}
-//		if (obj.getName() != null) {
-//			entity.setName(obj.getName());
-//		}
-//		if (obj.getLastName() != null) {
-//			entity.setLastName(obj.getLastName());
-//		}
-//		if (obj.getPhone() != null) {
-//			entity.setPhone(obj.getPhone());
-//		}
-//		if (obj.getPhotoProfile() != null) {
-//			entity.setPhotoProfile(obj.getPhotoProfile());
-//		}
-
+		if (obj.getOrigin() != null)
+			entity.setOrigin(obj.getOrigin());
+		if (obj.getDestiny() != null)
+			entity.setDestiny(obj.getDestiny());
+		if (obj.getDescription() != null)
+			entity.setDescription(obj.getDescription());
+		if (obj.getTime() != null)
+			entity.setTime(obj.getTime());
+		if (obj.getVacancies() != null)
+			entity.setVacancies(obj.getVacancies());
+		if (obj.getPricePerVacancy() != null)
+			entity.setPricePerVacancy(obj.getPricePerVacancy());
+		if (obj.getLatitudeO() != null)
+			entity.setLatitudeO(obj.getLatitudeO());
+		if (obj.getLongitudeO() != null)
+			entity.setLongitudeO(obj.getLongitudeO());
+		if (obj.getLatitudeD() != null)
+			entity.setLatitudeD(obj.getLatitudeD());
+		if (obj.getLongitudeD() != null)
+			entity.setLongitudeD(obj.getLongitudeD());
+		if (obj.getRacerStatus() != null)
+			entity.setRacerStatus(obj.getRacerStatus());
 		return entity;
 	}
 }

@@ -99,25 +99,9 @@ public class ReserveService {
 
 	public Reserve updateData(Reserve entity, Reserve obj) {
 
-//		if( obj.getAger() != null) {
-//			entity.setAger(obj.getAger());
-//		}
-//		if (obj.getDescription() != null) {
-//			entity.setDescription(obj.getDescription());
-//		}
-//		if (obj.getName() != null) {
-//			entity.setName(obj.getName());
-//		}
-//		if (obj.getLastName() != null) {
-//			entity.setLastName(obj.getLastName());
-//		}
-//		if (obj.getPhone() != null) {
-//			entity.setPhone(obj.getPhone());
-//		}
-//		if (obj.getPhotoProfile() != null) {
-//			entity.setPhotoProfile(obj.getPhotoProfile());
-//		}
-//		
+		if (obj.getVacancy() != null)
+			entity.setVacancy(obj.getVacancy());
+		
 		return entity;
 	}
 }
