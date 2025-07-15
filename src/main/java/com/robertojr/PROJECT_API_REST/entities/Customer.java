@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -15,6 +17,7 @@ public class Customer extends User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL,orphanRemoval = true)
+	@JsonIgnore
 	private Set<Reserve> reserves = new HashSet<>();
 	
 	public Customer() {

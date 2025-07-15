@@ -1,5 +1,6 @@
 package com.robertojr.PROJECT_API_REST.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.robertojr.PROJECT_API_REST.entities.Customer;
 import com.robertojr.PROJECT_API_REST.services.CustomerService;
 
@@ -30,22 +33,29 @@ public class CustomerResource {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Customer> findById(@PathVariable Long id) {
-		return null;
+		Customer obj = service.findById(id);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@PostMapping
 	public ResponseEntity<Customer> insert(@RequestBody Customer Customer) {
-		return null;
+
+		Customer = service.insert(Customer);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(Customer.getId())
+				.toUri();
+
+		return ResponseEntity.created(uri).body(Customer);
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Customer> update(@RequestBody Customer Customer) {
-		return null;
+	public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody Customer Customer) {
+		Customer obj = service.update(id, Customer);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-		return null;
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
-
 }

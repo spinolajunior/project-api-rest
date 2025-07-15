@@ -19,7 +19,7 @@ public class Driver extends User implements Serializable {
 
 	private String carModel;
 	private String plateNumber;
-	private Double ratingNumber;
+	private Double ratingNumber = 0.0;
 	private AvailableDriver available;
 	
 	@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL , orphanRemoval = true)
@@ -35,7 +35,7 @@ public class Driver extends User implements Serializable {
 		super(id, name, lastName, phone, ager, description, photoProfile, credentials);
 		this.carModel = carModel;
 		this.plateNumber = plateNumber;
-		this.ratingNumber = 0.0;
+		
 		this.available = AvailableDriver.valueOfCode(available);
 	}
 

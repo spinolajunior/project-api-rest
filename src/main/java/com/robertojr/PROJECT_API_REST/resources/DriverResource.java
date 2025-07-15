@@ -1,5 +1,6 @@
 package com.robertojr.PROJECT_API_REST.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.robertojr.PROJECT_API_REST.entities.Driver;
 import com.robertojr.PROJECT_API_REST.services.DriverService;
 
@@ -30,22 +33,30 @@ public class DriverResource {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Driver> findById(@PathVariable Long id) {
-		return null;
+		Driver obj = service.findById(id);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@PostMapping
 	public ResponseEntity<Driver> insert(@RequestBody Driver Driver) {
-		return null;
+		
+		Driver = service.insert(Driver);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(Driver.getId()).toUri();
+		
+		return ResponseEntity.created(uri).body(Driver);
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Driver> update(@RequestBody Driver Driver) {
-		return null;
+	public ResponseEntity<Driver> update(@PathVariable Long id,@RequestBody Driver Driver) {
+		Driver obj = service.update(id, Driver);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-		return null;
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

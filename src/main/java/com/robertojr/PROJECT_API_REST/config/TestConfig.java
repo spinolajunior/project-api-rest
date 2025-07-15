@@ -91,7 +91,7 @@ public class TestConfig implements CommandLineRunner {
 				"-38.9640",
 				"São Bernardo a Nazare as 7Hrs",1,driver);
 		
-		Reserve reserve = new Reserve(null,5,Instant.now(),customer,racer1);
+		Reserve reserve = new Reserve(null,3,Instant.now(),customer,racer1);
 		
 		driverRepository.save(driver);
 		customerRepository.save(customer);

@@ -2,8 +2,6 @@ package com.robertojr.PROJECT_API_REST.entities;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,14 +28,13 @@ public class User implements Serializable {
 	private Integer ager;
 	private String description;
 	private String photoProfile;
-	
-	@OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "credential_id")
-	@JsonIgnore
 	private Login credential;
 
 	public User() {
-		
+
 	}
 
 	public User(Long id, String name, String lastName, String phone, Integer ager, String description,
@@ -141,7 +138,5 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

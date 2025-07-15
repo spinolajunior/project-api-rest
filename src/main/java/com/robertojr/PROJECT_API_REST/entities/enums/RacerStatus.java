@@ -2,7 +2,7 @@ package com.robertojr.PROJECT_API_REST.entities.enums;
 
 public enum RacerStatus {
 	
-	ACTIVE(1), COMPLETED(2), CANCELLED(0);
+	ACTIVE(0), COMPLETED(1), CANCELLED(2);
 
 	private int code;
 

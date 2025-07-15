@@ -1,5 +1,6 @@
 package com.robertojr.PROJECT_API_REST.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.robertojr.PROJECT_API_REST.entities.Reserve;
 import com.robertojr.PROJECT_API_REST.services.ReserveService;
 
@@ -30,22 +33,30 @@ public class ReserveResource {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Reserve> findById(@PathVariable Long id) {
-		return null;
+		Reserve obj = service.findById(id);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@PostMapping
 	public ResponseEntity<Reserve> insert(@RequestBody Reserve Reserve) {
-		return null;
+
+		Reserve = service.insert(Reserve);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(Reserve.getId())
+				.toUri();
+
+		return ResponseEntity.created(uri).body(Reserve);
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Reserve> update(@RequestBody Reserve Reserve) {
-		return null;
+	public ResponseEntity<Reserve> update(@PathVariable Long id, @RequestBody Reserve Reserve) {
+		Reserve obj = service.update(id, Reserve);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-		return null;
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

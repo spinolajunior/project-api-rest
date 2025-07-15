@@ -2,6 +2,8 @@ package com.robertojr.PROJECT_API_REST.entities;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +25,7 @@ public class Login implements Serializable {
 	private String email;
 	
 	@OneToOne(mappedBy = "credential")
-	
+	@JsonIgnore
 	private User userObj;
 	
 	public Login() {

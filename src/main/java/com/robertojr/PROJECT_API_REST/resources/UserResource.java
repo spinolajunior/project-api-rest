@@ -2,6 +2,7 @@ package com.robertojr.PROJECT_API_REST.resources;
 
 import java.net.URI;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.robertojr.PROJECT_API_REST.entities.User;
+import com.robertojr.PROJECT_API_REST.resources.DTos.UserDTO;
 import com.robertojr.PROJECT_API_REST.services.UserService;
 
 @RestController
@@ -31,9 +33,10 @@ public class UserResource {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
 		User obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+		UserDTO userDTO = new UserDTO(obj);
+		return ResponseEntity.ok().body(userDTO);
 	}
 
 	@PostMapping

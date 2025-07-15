@@ -25,7 +25,6 @@ public class Reserve implements Serializable {
 	
 	
 	@ManyToOne
-	@JsonIgnore
 	private Customer customer;
 	
 	@ManyToOne
@@ -37,6 +36,7 @@ public class Reserve implements Serializable {
 	}
 
 	public Reserve(Long id, Integer vacancy, Instant dataReserve, Customer customer , Racer racer) {
+		
 		
 		this.id = id;
 		this.vacancy = vacancy;
