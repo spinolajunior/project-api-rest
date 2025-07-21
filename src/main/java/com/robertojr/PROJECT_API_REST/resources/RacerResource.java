@@ -1,6 +1,7 @@
 package com.robertojr.PROJECT_API_REST.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.robertojr.PROJECT_API_REST.entities.Racer;
+import com.robertojr.PROJECT_API_REST.resources.DTos.RacerDTO;
 import com.robertojr.PROJECT_API_REST.services.RacerService;
 
 @RestController
@@ -26,15 +28,20 @@ public class RacerResource {
 	RacerService service;
 
 	@GetMapping
-	public ResponseEntity<List<Racer>> findAll() {
-		List<Racer> Racers = service.findAll();
-		return ResponseEntity.ok().body(Racers);
+	public ResponseEntity<List<RacerDTO>> findAll() {
+		List<Racer> racers = service.findAll();
+		List<RacerDTO> racersDTO = new ArrayList<>();
+		for (Racer item : racers) {
+			racersDTO.add(new RacerDTO(item));
+		}
+		return ResponseEntity.ok().body(racersDTO);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Racer> findById(@PathVariable Long id) {
+	public ResponseEntity<RacerDTO> findById(@PathVariable Long id) {
 		Racer obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+		RacerDTO racerDTO = new RacerDTO(obj);
+		return ResponseEntity.ok().body(racerDTO);
 	}
 
 	@PostMapping

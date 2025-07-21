@@ -1,6 +1,7 @@
 package com.robertojr.PROJECT_API_REST.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,13 @@ public class UserResource {
 	UserService service;
 
 	@GetMapping
-	public ResponseEntity<List<User>> findAll() {
+	public ResponseEntity<List<UserDTO>> findAll() {
 		List<User> users = service.findAll();
-		return ResponseEntity.ok().body(users);
+		List<UserDTO> userDTO = new ArrayList<>();
+		for(User item : users) {
+			userDTO.add(new UserDTO(item));
+		}
+		return ResponseEntity.ok().body(userDTO);
 	}
 
 	@GetMapping(value = "/{id}")

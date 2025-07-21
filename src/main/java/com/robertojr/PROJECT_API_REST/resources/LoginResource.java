@@ -1,6 +1,7 @@
 package com.robertojr.PROJECT_API_REST.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.robertojr.PROJECT_API_REST.entities.Login;
+import com.robertojr.PROJECT_API_REST.resources.DTos.LoginDTO;
 import com.robertojr.PROJECT_API_REST.services.LoginService;
 
 @RestController
@@ -26,15 +28,21 @@ public class LoginResource {
 	LoginService service;
 
 	@GetMapping
-	public ResponseEntity<List<Login>> findAll() {
-		List<Login> Logins = service.findAll();
-		return ResponseEntity.ok().body(Logins);
+	public ResponseEntity<List<LoginDTO>> findAll() {
+		List<Login> logins = service.findAll();
+		List<LoginDTO> loginsDTO = new ArrayList<>();
+		for(Login item : logins ){
+			
+			loginsDTO.add(new LoginDTO(item));
+		}
+		return ResponseEntity.ok().body(loginsDTO);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Login> findById(@PathVariable Long id) {
+	public ResponseEntity<LoginDTO> findById(@PathVariable Long id) {
 		Login obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+		LoginDTO loginDTO = new LoginDTO(obj);
+		return ResponseEntity.ok().body(loginDTO);
 	}
 
 	@PostMapping

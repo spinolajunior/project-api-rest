@@ -13,6 +13,7 @@ public class UserDTO {
 	private Integer ager;
 	private String description;
 	private String photoProfile;
+	private Long CredentialID;
 
 	public UserDTO(){
 		
@@ -26,6 +27,7 @@ public class UserDTO {
 		this.ager = user.getAger();
 		this.description = user.getDescription();
 		this.photoProfile = user.getPhotoProfile();
+		this.CredentialID = user.getCredential().getId();
 	}
 
 	
@@ -84,6 +86,15 @@ public class UserDTO {
 
 	public void setPhotoProfile(String photoProfile) {
 		this.photoProfile = photoProfile;
+	}
+
+	
+	public Long getCredentialID() {
+		return CredentialID;
+	}
+
+	public void setCredentialID(Long credentialID) {
+		CredentialID = credentialID;
 	}
 
 	@Override

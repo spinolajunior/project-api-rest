@@ -1,6 +1,7 @@
 package com.robertojr.PROJECT_API_REST.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.robertojr.PROJECT_API_REST.entities.Customer;
+import com.robertojr.PROJECT_API_REST.resources.DTos.CustomerDTO;
 import com.robertojr.PROJECT_API_REST.services.CustomerService;
 
 @RestController
@@ -26,15 +28,20 @@ public class CustomerResource {
 	CustomerService service;
 
 	@GetMapping
-	public ResponseEntity<List<Customer>> findAll() {
-		List<Customer> Customers = service.findAll();
-		return ResponseEntity.ok().body(Customers);
+	public ResponseEntity<List<CustomerDTO>> findAll() {
+		List<Customer> customers = service.findAll();
+		List<CustomerDTO> customerDTO = new ArrayList<>();
+		for (Customer item : customers) {
+			customerDTO.add(new CustomerDTO(item));
+		}
+		return ResponseEntity.ok().body(customerDTO);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Customer> findById(@PathVariable Long id) {
+	public ResponseEntity<CustomerDTO> findById(@PathVariable Long id) {
 		Customer obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+		CustomerDTO customerDTO = new CustomerDTO(obj);
+		return ResponseEntity.ok().body(customerDTO);
 	}
 
 	@PostMapping
