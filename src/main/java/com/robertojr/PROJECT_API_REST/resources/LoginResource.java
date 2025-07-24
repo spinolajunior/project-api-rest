@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.robertojr.PROJECT_API_REST.entities.Login;
 import com.robertojr.PROJECT_API_REST.resources.DTos.LoginDTO;
+import com.robertojr.PROJECT_API_REST.resources.DTos.UserDTO;
 import com.robertojr.PROJECT_API_REST.services.LoginService;
+import com.robertojr.PROJECT_API_REST.services.UserService;
 
 @RestController
 @RequestMapping(value = "/logins")
@@ -26,13 +29,15 @@ public class LoginResource {
 
 	@Autowired
 	LoginService service;
+	@Autowired
+	UserService userService;
 
 	@GetMapping
 	public ResponseEntity<List<LoginDTO>> findAll() {
 		List<Login> logins = service.findAll();
 		List<LoginDTO> loginsDTO = new ArrayList<>();
-		for(Login item : logins ){
-			
+		for (Login item : logins) {
+
 			loginsDTO.add(new LoginDTO(item));
 		}
 		return ResponseEntity.ok().body(loginsDTO);
@@ -47,16 +52,15 @@ public class LoginResource {
 
 	@PostMapping
 	public ResponseEntity<Login> insert(@RequestBody Login Login) {
-		
+
 		Login = service.insert(Login);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(Login.getId()).toUri();
-		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(Login.getId()).toUri();
+
 		return ResponseEntity.created(uri).body(Login);
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Login> update(@PathVariable Long id,@RequestBody Login Login) {
+	public ResponseEntity<Login> update(@PathVariable Long id, @RequestBody Login Login) {
 		Login obj = service.update(id, Login);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -67,4 +71,22 @@ public class LoginResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	@PostMapping("/validate")
+	public ResponseEntity<UserDTO> validadeLogin(@RequestBody Login login) {
+
+		List<LoginDTO> teste = findAll().getBody().stream()
+				.filter(x -> x.getUsername().equals(login.getUserName()) && x.getPassword().equals(login.getPassword()))
+				.toList();
+
+		if (teste.size() > 0) {
+			Long id = teste.getFirst().getId();
+
+			UserDTO userLogin = new UserDTO(userService.findById(id));
+
+			return ResponseEntity.ok().body(userLogin);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		}
+
+	}
 }
