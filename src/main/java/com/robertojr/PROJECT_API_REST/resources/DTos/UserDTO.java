@@ -27,6 +27,7 @@ public class UserDTO {
 		this.ager = user.getAger();
 		this.description = user.getDescription();
 		this.photoProfile = user.getPhotoProfile();
+		
 		this.CredentialID = user.getCredential().getId();
 	}
 
