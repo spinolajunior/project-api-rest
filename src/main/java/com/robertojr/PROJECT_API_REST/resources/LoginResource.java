@@ -89,4 +89,41 @@ public class LoginResource {
 		}
 
 	}
+
+	@PostMapping("/validate/new_user")
+	public ResponseEntity<LoginDTO> validateNewUser(@RequestBody Login login) {
+
+		List<Login> logins = service.findAll();
+
+		String email = logins.stream().filter(x -> x.getEmail().equals(login.getEmail())).findFirst().toString();
+		String user = logins.stream().filter(x -> x.getUserName().equals(login.getUserName())).findFirst().toString();
+		String password = logins.stream().filter(x -> x.getPassword().equals(login.getPassword())).findFirst()
+				.toString();
+
+		LoginDTO validate = new LoginDTO();
+
+		if (email.isEmpty()) {
+			validate.setEmail(email);
+		} else {
+			validate.setEmail(null);
+		}
+		if (user.isEmpty()) {
+			validate.setUsername(user);
+		} else {
+			validate.setUsername(null);
+		}
+		if (password.isEmpty()) {
+			validate.setPassword(password);
+		} else {
+			validate.setPassword(null);
+		}
+
+		if (validate.getEmail() != null && validate.getUsername() != null && validate.getPassword() != null) {
+
+			return ResponseEntity.ok().body(validate);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(validate);
+		}
+
+	}
 }
