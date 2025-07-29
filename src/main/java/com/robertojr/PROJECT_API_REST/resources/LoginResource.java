@@ -3,6 +3,7 @@ package com.robertojr.PROJECT_API_REST.resources;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -94,26 +95,27 @@ public class LoginResource {
 	public ResponseEntity<LoginDTO> validateNewUser(@RequestBody Login login) {
 
 		List<Login> logins = service.findAll();
+		
+	
 
-		String email = logins.stream().filter(x -> x.getEmail().equals(login.getEmail())).findFirst().toString();
-		String user = logins.stream().filter(x -> x.getUserName().equals(login.getUserName())).findFirst().toString();
-		String password = logins.stream().filter(x -> x.getPassword().equals(login.getPassword())).findFirst()
-				.toString();
+		String email = logins.stream().filter(x -> x.getEmail().equals(login.getEmail())).findFirst().map(Login::getEmail).orElse(null);
+		String user = logins.stream().filter(x -> x.getUserName().equals(login.getUserName())).findFirst().map(Login::getUserName).orElse(null);
+		String password = logins.stream().filter(x -> x.getPassword().equals(login.getPassword())).findFirst().map(Login::getPassword).orElse(null);
 
 		LoginDTO validate = new LoginDTO();
 
-		if (email.isEmpty()) {
-			validate.setEmail(email);
+		if (email == null) {
+			validate.setEmail(login.getEmail());
 		} else {
 			validate.setEmail(null);
 		}
-		if (user.isEmpty()) {
-			validate.setUsername(user);
+		if (user == null) {
+			validate.setUsername(login.getUserName());
 		} else {
 			validate.setUsername(null);
 		}
-		if (password.isEmpty()) {
-			validate.setPassword(password);
+		if (password == null) {
+			validate.setPassword(login.getPassword());
 		} else {
 			validate.setPassword(null);
 		}
