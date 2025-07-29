@@ -3,7 +3,6 @@ package com.robertojr.PROJECT_API_REST.resources;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -91,16 +90,17 @@ public class LoginResource {
 
 	}
 
-	@PostMapping("/validate/new_user")
-	public ResponseEntity<LoginDTO> validateNewUser(@RequestBody Login login) {
+	@PostMapping("/validate/new_login")
+	public ResponseEntity<LoginDTO> validateNewLogin(@RequestBody Login login) {
 
 		List<Login> logins = service.findAll();
-		
-	
 
-		String email = logins.stream().filter(x -> x.getEmail().equals(login.getEmail())).findFirst().map(Login::getEmail).orElse(null);
-		String user = logins.stream().filter(x -> x.getUserName().equals(login.getUserName())).findFirst().map(Login::getUserName).orElse(null);
-		String password = logins.stream().filter(x -> x.getPassword().equals(login.getPassword())).findFirst().map(Login::getPassword).orElse(null);
+		String email = logins.stream().filter(x -> x.getEmail().equals(login.getEmail())).findFirst()
+				.map(Login::getEmail).orElse(null);
+		String user = logins.stream().filter(x -> x.getUserName().equals(login.getUserName())).findFirst()
+				.map(Login::getUserName).orElse(null);
+		String password = logins.stream().filter(x -> x.getPassword().equals(login.getPassword())).findFirst()
+				.map(Login::getPassword).orElse(null);
 
 		LoginDTO validate = new LoginDTO();
 
