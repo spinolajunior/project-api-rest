@@ -33,12 +33,12 @@ public class Driver extends User implements Serializable {
 	}
 
 	public Driver(Long id, String name, String lastName, String phone, Integer ager, String description,
-			String photoProfile, Login credentials, String carModel, String plateNumber, int available) {
+			String photoProfile, Login credentials, String carModel, String plateNumber, String available) {
 		super(id, name, lastName, phone, ager, description, photoProfile, credentials);
 		this.carModel = carModel;
 		this.plateNumber = plateNumber;
 		
-		this.available = AvailableDriver.valueOfCode(available);
+		this.available = AvailableDriver.valueOfCode(Integer.parseInt(available));
 	}
 
 	public String getCarModel() {

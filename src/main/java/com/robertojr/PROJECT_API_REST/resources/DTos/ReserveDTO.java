@@ -1,26 +1,28 @@
 package com.robertojr.PROJECT_API_REST.resources.DTos;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import com.robertojr.PROJECT_API_REST.entities.Reserve;
 
-public class ReserveDTO {
+public class ReserveDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	private Integer vacancy;
 	private Instant dataReserve;
 	private Long customerId;
 	private Long racerId;
-	
+
 	public ReserveDTO() {
-		
+
 	}
-	
+
 	public ReserveDTO(Reserve reserve) {
 		this.id = reserve.getId();
 		this.vacancy = reserve.getVacancy();
 		this.dataReserve = reserve.getDataReserve();
-		
 		customerId = reserve.getCustomer().getId();
 		racerId = reserve.getRacer().getId();
 	}
@@ -89,9 +91,5 @@ public class ReserveDTO {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
+
 }

@@ -64,7 +64,7 @@ public class TestConfig implements CommandLineRunner {
 				"75983717345",
 				24,
 				"Motorista Qualificado",
-				"Endereço Url da foto", login1, "Grand Siena","OZH7B20", 0);
+				"Endereço Url da foto", login1, "Grand Siena","OZH7B20", "0");
 		
 		
 		Customer customer = new Customer(null,
