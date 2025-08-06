@@ -17,11 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.robertojr.PROJECT_API_REST.entities.Customer;
+import com.robertojr.PROJECT_API_REST.entities.Driver;
 import com.robertojr.PROJECT_API_REST.entities.Login;
+import com.robertojr.PROJECT_API_REST.entities.User;
+import com.robertojr.PROJECT_API_REST.resources.DTos.CustomerDTO;
+import com.robertojr.PROJECT_API_REST.resources.DTos.DriverDTO;
 import com.robertojr.PROJECT_API_REST.resources.DTos.LoginDTO;
 import com.robertojr.PROJECT_API_REST.resources.DTos.UserDTO;
+import com.robertojr.PROJECT_API_REST.services.CustomerService;
+import com.robertojr.PROJECT_API_REST.services.DriverService;
 import com.robertojr.PROJECT_API_REST.services.LoginService;
 import com.robertojr.PROJECT_API_REST.services.UserService;
+import com.robertojr.PROJECT_API_REST.services.exceptions.IlegalArgumentException;
 
 @RestController
 @RequestMapping(value = "/logins")
@@ -31,6 +39,10 @@ public class LoginResource {
 	LoginService service;
 	@Autowired
 	UserService userService;
+	@Autowired
+	CustomerService customerService;
+	@Autowired
+	DriverService driverService;
 
 	@GetMapping
 	public ResponseEntity<List<LoginDTO>> findAll() {
@@ -72,18 +84,24 @@ public class LoginResource {
 	}
 
 	@PostMapping("/validate")
-	public ResponseEntity<UserDTO> validadeLogin(@RequestBody Login login) {
+	public ResponseEntity<? extends UserDTO> validadeLogin(@RequestBody Login login) {
 
 		List<LoginDTO> teste = findAll().getBody().stream()
 				.filter(x -> x.getUsername().equals(login.getUserName()) && x.getPassword().equals(login.getPassword()))
 				.toList();
 
 		if (teste.size() > 0) {
-			Long id = teste.getFirst().getId();
+			
+			User user = userService.findById(teste.getFirst().getId());
+			
+			if (user instanceof Driver driver) {
+				return ResponseEntity.ok().body(new DriverDTO(driver));
+			} else if (user instanceof Customer customer) {
+				return ResponseEntity.ok().body(new CustomerDTO(customer));
+			}else {
+				throw new IlegalArgumentException("User not Driver or Customer");
+			}
 
-			UserDTO userLogin = new UserDTO(userService.findById(id));
-
-			return ResponseEntity.ok().body(userLogin);
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}

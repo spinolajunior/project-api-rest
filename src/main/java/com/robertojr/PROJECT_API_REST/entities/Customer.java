@@ -7,12 +7,14 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_customer")
+@DiscriminatorValue("CUSTOMER")
 public class Customer extends User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

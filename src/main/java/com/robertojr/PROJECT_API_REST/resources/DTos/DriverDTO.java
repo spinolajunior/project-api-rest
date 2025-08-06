@@ -1,5 +1,6 @@
 package com.robertojr.PROJECT_API_REST.resources.DTos;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,15 +8,11 @@ import com.robertojr.PROJECT_API_REST.entities.Driver;
 import com.robertojr.PROJECT_API_REST.entities.Racer;
 import com.robertojr.PROJECT_API_REST.entities.enums.AvailableDriver;
 
-public class DriverDTO {
+public class DriverDTO extends UserDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
-	private Long id;
-	private String name;
-	private String lastName;
-	private String phone;
-	private Integer ager;
-	private String description;
-	private String photoProfile;
+	
 	
 	private String carModel;
 	private String plateNumber;
@@ -33,13 +30,14 @@ public class DriverDTO {
 
 	public DriverDTO(Driver driver) {
 		
-		this.id = driver.getId();
-		this.name = driver.getName();
-		this.lastName = driver.getName();
-		this.phone = driver.getPhone();
-		this.ager = driver.getAger();
-		this.description = driver.getDescription();
-		this.photoProfile = driver.getPhotoProfile();
+		setId( driver.getId());
+		setName(driver.getName());
+		setLastName(driver.getLastName());
+		setPhone(driver.getPhone());
+		setAger(driver.getAger());
+		setDescription(driver.getDescription());
+		setPhotoProfile(driver.getPhotoProfile());
+		
 		this.carModel = driver.getCarModel();
 		this.plateNumber = driver.getPlateNumber();
 		this.ratingNumber = driver.getRatingNumber();
@@ -52,61 +50,8 @@ public class DriverDTO {
 		}
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public Integer getAger() {
-		return ager;
-	}
-
-	public void setAger(Integer ager) {
-		this.ager = ager;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getPhotoProfile() {
-		return photoProfile;
-	}
-
-	public void setPhotoProfile(String photoProfile) {
-		this.photoProfile = photoProfile;
-	}
+	
+	
 
 	public String getCarModel() {
 		return carModel;
@@ -155,30 +100,7 @@ public class DriverDTO {
 		this.available = available;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DriverDTO other = (DriverDTO) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+	
 	
 	
 

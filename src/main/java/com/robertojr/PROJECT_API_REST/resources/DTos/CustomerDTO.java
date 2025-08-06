@@ -23,7 +23,7 @@ public class CustomerDTO extends UserDTO {
 		setAger(customer.getAger());
 		setDescription(customer.getDescription());
 		setPhotoProfile(customer.getPhotoProfile());
-		setCredentialID(customer.getCredential().getId());
+		setCredentialId(customer.getCredential().getId());
 		setReserves(customer.getReserves());
 		
 	}

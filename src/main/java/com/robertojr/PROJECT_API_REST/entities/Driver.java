@@ -8,12 +8,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.robertojr.PROJECT_API_REST.entities.enums.AvailableDriver;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_driver")
+@DiscriminatorValue("DRIVER")
 public class Driver extends User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
