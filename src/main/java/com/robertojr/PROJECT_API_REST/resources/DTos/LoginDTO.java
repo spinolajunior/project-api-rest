@@ -5,7 +5,7 @@ import com.robertojr.PROJECT_API_REST.entities.Login;
 public class LoginDTO {
 
 	private Long id;
-	private String username;
+	private String userName;
 	private String password;
 	private String email;
 	
@@ -18,7 +18,7 @@ public class LoginDTO {
 	public LoginDTO(Login login) {
 		
 		this.id = login.getId();
-		this.username = login.getUserName();
+		this.userName = login.getUserName();
 		this.password = login.getPassword();
 		this.email = login.getEmail();
 		this.userId = login.getUserObj().getId();
@@ -32,12 +32,12 @@ public class LoginDTO {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {

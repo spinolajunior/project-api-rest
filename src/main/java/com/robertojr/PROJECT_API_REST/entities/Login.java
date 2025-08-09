@@ -20,7 +20,7 @@ public class Login implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String username;
+	private String userName;
 	private String password;
 	private String email;
 	
@@ -32,10 +32,10 @@ public class Login implements Serializable {
 
 	}
 
-	public Login(Long id, String username, String password, String email) {
+	public Login(Long id, String userName, String password, String email) {
 		super();
 		this.id = id;
-		this.username = username;
+		this.userName = userName;
 		this.password = password;
 		this.email = email;
 		
@@ -50,11 +50,11 @@ public class Login implements Serializable {
 	}
 
 	public String getUserName() {
-		return username;
+		return userName;
 	}
 
 	public void setUserName(String user) {
-		this.username = user;
+		this.userName = user;
 	}
 
 	public String getPassword() {

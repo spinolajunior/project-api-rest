@@ -21,6 +21,7 @@ import com.robertojr.PROJECT_API_REST.entities.Customer;
 import com.robertojr.PROJECT_API_REST.entities.Driver;
 import com.robertojr.PROJECT_API_REST.entities.Login;
 import com.robertojr.PROJECT_API_REST.entities.User;
+import com.robertojr.PROJECT_API_REST.entities.enums.UserType;
 import com.robertojr.PROJECT_API_REST.resources.DTos.CustomerDTO;
 import com.robertojr.PROJECT_API_REST.resources.DTos.DriverDTO;
 import com.robertojr.PROJECT_API_REST.resources.DTos.LoginDTO;
@@ -87,18 +88,22 @@ public class LoginResource {
 	public ResponseEntity<? extends UserDTO> validadeLogin(@RequestBody Login login) {
 
 		List<LoginDTO> teste = findAll().getBody().stream()
-				.filter(x -> x.getUsername().equals(login.getUserName()) && x.getPassword().equals(login.getPassword()))
+				.filter(x -> x.getUserName().equals(login.getUserName()) && x.getPassword().equals(login.getPassword()))
 				.toList();
 
 		if (teste.size() > 0) {
-			
+
 			User user = userService.findById(teste.getFirst().getId());
-			
+
 			if (user instanceof Driver driver) {
-				return ResponseEntity.ok().body(new DriverDTO(driver));
+				DriverDTO obj = new DriverDTO(driver);
+				obj.setType(UserType.DRIVER);
+				return ResponseEntity.ok().body(obj);
 			} else if (user instanceof Customer customer) {
-				return ResponseEntity.ok().body(new CustomerDTO(customer));
-			}else {
+				CustomerDTO obj = new CustomerDTO(customer);
+				obj.setType(UserType.CUSTOMER);
+				return ResponseEntity.ok().body(obj);
+			} else {
 				throw new IlegalArgumentException("User not Driver or Customer");
 			}
 
@@ -128,9 +133,9 @@ public class LoginResource {
 			validate.setEmail(null);
 		}
 		if (user == null) {
-			validate.setUsername(login.getUserName());
+			validate.setUserName(login.getUserName());
 		} else {
-			validate.setUsername(null);
+			validate.setUserName(null);
 		}
 		if (password == null) {
 			validate.setPassword(login.getPassword());
@@ -138,7 +143,7 @@ public class LoginResource {
 			validate.setPassword(null);
 		}
 
-		if (validate.getEmail() != null && validate.getUsername() != null && validate.getPassword() != null) {
+		if (validate.getEmail() != null && validate.getUserName() != null && validate.getPassword() != null) {
 
 			return ResponseEntity.ok().body(validate);
 		} else {

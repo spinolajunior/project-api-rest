@@ -3,10 +3,12 @@ package com.robertojr.PROJECT_API_REST.resources.DTos;
 import java.util.Objects;
 
 import com.robertojr.PROJECT_API_REST.entities.User;
+import com.robertojr.PROJECT_API_REST.entities.enums.UserType;
 
 public class UserDTO {
 
 	private Long id;
+	private UserType type;
 	private String name;
 	private String lastName;
 	private String phone;
@@ -15,10 +17,10 @@ public class UserDTO {
 	private String photoProfile;
 	private Long credentialId;
 
-	public UserDTO(){
-		
+	public UserDTO() {
+
 	}
-	
+
 	public UserDTO(User user) {
 		this.id = user.getId();
 		this.name = user.getName();
@@ -27,12 +29,10 @@ public class UserDTO {
 		this.ager = user.getAger();
 		this.description = user.getDescription();
 		this.photoProfile = user.getPhotoProfile();
-		
+
 		this.credentialId = user.getCredential().getId();
 	}
 
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -47,6 +47,14 @@ public class UserDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public UserType getType() {
+		return type;
+	}
+
+	public void setType(UserType type) {
+		this.type = type;
 	}
 
 	public String getLastName() {
@@ -89,7 +97,6 @@ public class UserDTO {
 		this.photoProfile = photoProfile;
 	}
 
-	
 	public Long getCredentialId() {
 		return credentialId;
 	}
@@ -114,9 +121,5 @@ public class UserDTO {
 		UserDTO other = (UserDTO) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
-	
 
 }
