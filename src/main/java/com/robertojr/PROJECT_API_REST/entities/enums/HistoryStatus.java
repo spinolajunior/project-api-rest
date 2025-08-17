@@ -2,7 +2,7 @@ package com.robertojr.PROJECT_API_REST.entities.enums;
 
 public enum HistoryStatus {
 	
-	COMPLETED(1), CANCELLED(2);
+	COMPLETED(1), CANCELLED(2),ACTIVE(3);
 
 	private int code;
 
