@@ -65,6 +65,7 @@ public class Historico implements Serializable {
 		this.vagasReservadas = reserva.getVacancy();
 		this.valorUnitario = reserva.getRacer().getPricePerVacancy();
 		this.valorTotal = reserva.getRacer().getPricePerVacancy() * reserva.getVacancy();
+		this.data = reserva.getDataReserve();
 
 		return this;
 
@@ -176,7 +177,7 @@ public class Historico implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(data, destino, id, motorista, origem, reserva);
 	}
 
 	@Override
@@ -188,7 +189,10 @@ public class Historico implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Historico other = (Historico) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(data, other.data) && Objects.equals(destino, other.destino)
+				&& Objects.equals(id, other.id) && Objects.equals(motorista, other.motorista)
+				&& Objects.equals(origem, other.origem) && Objects.equals(reserva, other.reserva);
 	}
 
+	
 }
