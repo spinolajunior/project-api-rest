@@ -46,13 +46,13 @@ public class ReserveResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Reserve> insert(@RequestBody Reserve Reserve) {
+	public ResponseEntity<ReserveDTO> insert(@RequestBody Reserve Reserve) {
 
 		Reserve = service.insert(Reserve);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(Reserve.getId())
 				.toUri();
 
-		return ResponseEntity.created(uri).body(Reserve);
+		return ResponseEntity.created(uri).body(new ReserveDTO(Reserve));
 	}
 
 	@PutMapping(value = "/{id}")

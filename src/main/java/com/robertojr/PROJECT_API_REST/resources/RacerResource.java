@@ -45,12 +45,12 @@ public class RacerResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Racer> insert(@RequestBody Racer Racer) {
+	public ResponseEntity<RacerDTO> insert(@RequestBody Racer Racer) {
 
 		Racer = service.insert(Racer);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(Racer.getId()).toUri();
 
-		return ResponseEntity.created(uri).body(Racer);
+		return ResponseEntity.created(uri).body(new RacerDTO(Racer));
 	}
 
 	@PutMapping(value = "/{id}")
